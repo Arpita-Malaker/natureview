@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NatureView</title>
+<link rel="stylesheet" href="style.css">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f6f8;
+    }
+    header {
+        background: #2c3e50;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 25px;
+    }
+    header h1 {
+        font-size: 24px;
+    }
+    .user-info {
+        font-size: 16px;
+    }
+    .user-info button {
+        margin-left: 15px;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 6px;
+        background: #e74c3c;
+        color: white;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    .user-info button:hover {
+        background: #c0392b;
+    }
+
+    .top-bar {
+        padding: 20px;
+        text-align: center;
+        background: #ecf0f1;
+    }
+    .toggle-upload-btn {
+        background: #27ae60;
+        color: white;
+        border: none;
+        padding: 14px 30px;
+        font-size: 18px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+    .toggle-upload-btn:hover {
+        background: #1e8449;
+    }
+
+    .upload-section {
+        width: 100%;
+        padding: 40px 20px;
+        background: #fff;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        display: none; /* Hidden initially */
+        animation: slideDown 0.4s ease forwards;
+    }
+    .upload-section h2 {
+        margin-bottom: 20px;
+        font-size: 28px;
+        color: #2c3e50;
+    }
+    .upload-section input[type="text"] {
+        width: 50%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 16px;
+    }
+    .upload-section input[type="file"] {
+        margin: 10px 0;
+    }
+    .upload-section button {
+        padding: 12px 25px;
+        background: #3498db;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    .upload-section button:hover {
+        background: #2980b9;
+    }
+    .status {
+        margin-top: 10px;
+        color: #2c3e50;
+        font-size: 14px;
+    }
+
+    .video-section {
+        padding: 40px 20px;
+    }
+    .video-section h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 28px;
+        color: #2c3e50;
+    }
+    .video-feed {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 20px;
+        width: 100%;
+    }
+    .video-card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        padding: 10px;
+        text-align: center;
+    }
+    .video-card h3 {
+        margin: 10px 0;
+        font-size: 18px;
+    }
+    video {
+        width: 100%;
+        border-radius: 6px;
+    }
+
+    @keyframes slideDown {
+        0% { opacity: 0; transform: translateY(-10px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+<body>
+<header>
+    <h1>NatureView</h1>
+    <div class="user-info">
+        <span>Welcome, <strong id="userEmail">User</strong></span>
+        <button id="logoutBtn">Logout</button>
+    </div>
+</header>
+
+<div class="top-bar">
+    <button class="toggle-upload-btn" id="showUploadBtn">+ Upload Video</button>
+</div>
+
+<div class="upload-section" id="uploadSection">
+    <h2>Upload Your Video</h2>
+    <input type="text" id="videoTitle" placeholder="Enter video title" /><br>
+    <input type="file" id="videoInput" accept="video/*"/><br>
+    <button id="uploadBtn">Upload</button>
+    <div class="status" id="uploadStatus"></div>
+</div>
+
+<div class="video-section">
+    <h2>Latest Videos</h2>
+    <div class="video-feed" id="videoFeed"></div>
+</div>
+
+<script type="module" src="firebase.js"></script>
+<script type="module" src="auth.js"></script>
+<script type="module" src="script.js"></script>
+<script type="module">
+import { checkAuth } from './auth.js';
+checkAuth();
+document.getElementById("logoutBtn").addEventListener("click", () => { import('./auth.js').then(m=>m.logout()); });
+
+// Toggle Upload Section
+const showUploadBtn = document.getElementById("showUploadBtn");
+const uploadSection = document.getElementById("uploadSection");
+
+showUploadBtn.addEventListener("click", () => {
+    if (uploadSection.style.display === "none" || uploadSection.style.display === "") {
+        uploadSection.style.display = "block";
+        showUploadBtn.textContent = "✖ Close Upload";
+    } else {
+        uploadSection.style.display = "none";
+        showUploadBtn.textContent = "+ Upload Video";
+    }
+});
+</script>
+</body>
+</html>

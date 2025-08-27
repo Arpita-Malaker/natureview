@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signup - NatureView</title>
+<style>
+  body { font-family: Arial, sans-serif; display:flex; justify-content:center; align-items:center; height:100vh; background:#f0f0f0; margin:0; }
+  .form-container { background:white; padding:20px; border-radius:6px; box-shadow:0 1px 5px rgba(0,0,0,0.2); width:300px; }
+  h2 { text-align:center; margin-bottom:15px; }
+  input, select, button { width:100%; padding:10px; margin:8px 0; box-sizing:border-box; }
+  button { background:#cc0000; color:white; border:none; cursor:pointer; border-radius:4px; }
+  button:hover { background:#a80000; }
+  p { text-align:center; font-size:14px; }
+  a { color:#cc0000; text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="form-container">
+  <h2>Signup</h2>
+  <input type="text" id="signup-name" placeholder="Name">
+  <input type="email" id="signup-email" placeholder="Email">
+  <input type="password" id="signup-password" placeholder="Password">
+  <select id="signup-role">
+    <option value="creator">Creator</option>
+    <option value="viewer">Viewer</option>
+  </select>
+  <button onclick="signup()">Signup</button>
+  <p>Already have account? <a href="login.html">Login</a></p>
+</div>
+
+<script type="module" src="firebase.js"></script>
+<script type="module" src="auth.js"></script>
+</body>
+</html>
